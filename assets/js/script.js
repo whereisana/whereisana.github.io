@@ -2,9 +2,16 @@
 
 
 
+const client = contentful.createClient({
+  // This is the space ID. A space is like a project folder in Contentful terms
+  space: "z9yzneui2lpo",
+  // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+  accessToken: "GltKC3ILj6IZ0KpnyxIZ2vZFVoNbcGG71svm0WHE4x8"
+});
+
+
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
-
 
 // sidebar variables
 const sidebar = document.querySelector("[data-sidebar]");
