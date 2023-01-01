@@ -85,8 +85,8 @@
    * shadow
    */
   
-  --shadow-neo: 8px 8px 25px #bebebe,
-                -8px -8px 25px #ffffff;
+  --shadow-neo: 8px 8px 24px #bebebe,
+                -8px -8px 24px #ffffff;
   --shadow-neo-small: 3px 3px 10px #bebebe,
                       -3px -3px 10px #ffffff;
   --shadow-neo-pressed-small: inset 3px 3px 10px #bebebe,
@@ -1021,9 +1021,8 @@ main {
 
 .blog-post-item > a {
   position: relative;
-  background: var(--border-gradient-neo);
   height: 100%;
-  box-shadow: var(--shadow-4);
+  box-shadow: var(--shadow-neo-small);
   border-radius: 16px;
   z-index: 1;
 }
@@ -1033,7 +1032,6 @@ main {
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: var(--eerie-black);
   z-index: -1;
 }
 
@@ -1063,17 +1061,10 @@ main {
   margin-bottom: 10px;
 }
 
-.blog-meta :is(.blog-category, time) {
+.blog-meta :is(time) {
   color: var(--smoky-black-70);
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
-}
-
-.blog-meta .dot {
-  background: var(--smoky-black-70);
-  width: 4px;
-  height: 4px;
-  border-radius: 4px;
 }
 
 .blog-item-title {
@@ -1089,6 +1080,11 @@ main {
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
   line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
