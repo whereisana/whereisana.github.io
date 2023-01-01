@@ -1,2 +1,11 @@
+author:
+  name: Anangsha Pathak
+social:
+  name: Anangsha Pathak
+  links:
+    - https://www.linkedin.com/in/anangsha-pathak-a9a058216/
+url: https://whereisana.github.io/
+google_analytics: G-J6468BNVFL
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
