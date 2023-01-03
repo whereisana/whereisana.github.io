@@ -9,7 +9,7 @@
  */
 
 // Cache references to DOM elements.
-var elms = ['timer', 'track', 'duration', 'progress', 'bar', 'waveform', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'loading', 'playlist', 'playlistOverlay', 'list', 'volume', 'volumeOverlay', 'volumeSlider'];
+var elms = ['timer', 'track', 'duration', 'background', 'progress', 'waveform', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'loading', 'playlist', 'playlistOverlay', 'list', 'volume', 'volumeOverlay', 'volumeSlider'];
 elms.forEach(function(elm) {
   window[elm] = document.querySelector('[data-player-' + elm + ']');
 });
@@ -71,8 +71,6 @@ Player.prototype = {
 
           // Start the wave animation if we have already loaded
           playBtn.classList.remove('active');
-          waveform.classList.add('active');
-          bar.classList.remove('active');
 
           // Show the pause button.
           if (sound.state() === 'loaded') {
@@ -101,8 +99,10 @@ Player.prototype = {
       // Add the waveform.
       data.wave = new Wave(sound._sounds[0]._node, waveform);
       data.wave.addAnimation(new data.wave.animations.Wave({
-        fillColor: '#AA8C5D',
-        lineColor: '#AA8C5D'
+        lineColor: 'transparent',
+        fillColor: {
+          gradient: ['#f9bf52', '#e5b256', '#d1a559', '#be985b', '#aa8c5d']
+        },
       }));
       sound._sounds[0]._node.crossOrigin = 'anonymous';
     }
@@ -285,8 +285,8 @@ prevBtn.addEventListener('click', function() {
 nextBtn.addEventListener('click', function() {
   player.skip('next');
 });
-waveform.addEventListener('click', function(event) {
-  player.seek((event.clientX - waveform.getBoundingClientRect().left) / waveform.scrollWidth);
+background.addEventListener('click', function(event) {
+  player.seek((event.clientX - background.getBoundingClientRect().left) / background.scrollWidth);
 });
 playlistBtn.addEventListener('click', function() {
   player.togglePlaylist();
