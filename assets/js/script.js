@@ -10,119 +10,6 @@ const client = contentful.createClient({
 });
 
 
-const aboutText = document.querySelector("[data-about-text]");
-client
-  .getEntry('1tYEHhstOTMqv3EKHEzwUP')
-  .then(function (entry) {
-    aboutText.innerText = entry.fields.about;
-  });
-
-
-const serviceList = document.querySelector("[data-service-list");
-client
-  .getEntries({
-    content_type: 'services',
-    order:'sys.createdAt'
-  })
-  .then(function (entries){
-    entries.items.forEach(function (entry) {
-      const title = entry.fields.title;
-      const img = "https:" + entry.fields.image.fields.file.url;
-      const desc = entry.fields.description;
-      const listItem = `
-      <li class="service-item">
-
-        <div class="service-icon-box">
-          <img src="${img}" alt="${title} icon" width="60">
-        </div>
-
-        <div class="service-content-box">
-          <h4 class="h4 service-item-title">${title}</h4>
-
-          <p class="service-item-text">
-            ${desc}
-          </p>
-        </div>
-
-      </li>
-      `;
-      serviceList.innerHTML += listItem;
-    });
-  });
-
-
-const testimonialsList = document.querySelector("[data-testimonials-list]");
-client
-  .getEntries({
-    content_type: 'testimonials',
-    order:'sys.createdAt'
-  })
-  .then(function (entries) {
-    entries.items.forEach(function (entry) {
-      const name = entry.fields.name;
-      const text = entry.fields.text;
-      const img = "https:" + entry.fields.image.fields.file.url;
-      const listItem = `
-      <li class="testimonials-item">
-        <div class="content-card" data-testimonials-item>
-
-          <figure class="testimonials-avatar-box">
-            <img src="${img}" alt="${name}" width="60" data-testimonials-avatar>
-          </figure>
-
-          <h4 class="h4 testimonials-item-title" data-testimonials-title>${name}</h4>
-
-          <div class="testimonials-text" data-testimonials-text>
-            <p>
-              ${text}
-            </p>
-          </div>
-
-        </div>
-      </li>
-      `;
-      testimonialsList.innerHTML += listItem;
-    });
-    
-    // testimonials variables
-    const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-    const modalContainer = document.querySelector("[data-modal-container]");
-    const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-    const overlay = document.querySelector("[data-overlay]");
-
-    // modal variable
-    const modalImg = document.querySelector("[data-modal-img]");
-    const modalTitle = document.querySelector("[data-modal-title]");
-    const modalText = document.querySelector("[data-modal-text]");
-
-    // modal toggle function
-    const testimonialsModalFunc = function () {
-      modalContainer.classList.toggle("active");
-      overlay.classList.toggle("active");
-    }
-
-    // add click event to all modal items
-    for (let i = 0; i < testimonialsItem.length; i++) {
-
-      testimonialsItem[i].addEventListener("click", function () {
-
-        modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-        modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-        modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-        modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
-        testimonialsModalFunc();
-
-      });
-
-    }
-
-    // add click event to modal close button
-    modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-    overlay.addEventListener("click", testimonialsModalFunc);
-  });
-
-
 const blogList = document.querySelector("[data-blog-list]");
 client
   .getEntries({
@@ -140,25 +27,18 @@ client
       const listItem = `
       <li class="blog-post-item">
         <a href="#">
-
           <figure class="blog-banner-box">
             <img src="${img}" alt="${title}" loading="lazy">
           </figure>
-
           <div class="blog-content">
-
             <div class="blog-meta">
               <time datetime="${entry.fields.date}">${date}</time>
             </div>
-
             <h3 class="h3 blog-item-title">${title}</h3>
-
             <div class="blog-text">
               ${body}
             </div>
-
           </div>
-
         </a>
       </li>
       `;
@@ -182,65 +62,42 @@ sidebarBtn.addEventListener("click", function () {
 });
 
 
+// testimonials variables
+const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+const modalContainer = document.querySelector("[data-modal-container]");
+const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+const overlay = document.querySelector("[data-overlay]");
 
-// custom select variables
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
+// modal variable
+const modalImg = document.querySelector("[data-modal-img]");
+const modalTitle = document.querySelector("[data-modal-title]");
+const modalText = document.querySelector("[data-modal-text]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
-
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
+// modal toggle function
+const testimonialsModalFunc = function () {
+  modalContainer.classList.toggle("active");
+  overlay.classList.toggle("active");
 }
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+// add click event to all modal items
+for (let i = 0; i < testimonialsItem.length; i++) {
 
-const filterFunc = function (selectedValue) {
+  testimonialsItem[i].addEventListener("click", function () {
 
-  for (let i = 0; i < filterItems.length; i++) {
+    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
+    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
+    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
+    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
 
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
-  }
-
-}
-
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
+    testimonialsModalFunc();
 
   });
 
 }
 
+// add click event to modal close button
+modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+overlay.addEventListener("click", testimonialsModalFunc);
 
 
 // contact form variables
