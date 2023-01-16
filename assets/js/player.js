@@ -126,12 +126,13 @@ Player.prototype = {
     // Get the Howl we want to manipulate.
     var sound = self.playlist[self.index].howl;
 
-    // Pause the sound.
-    sound.pause();
-
-    // Show the play button.
-    playBtn.classList.add('active');
-    pauseBtn.classList.remove('active');
+    if (sound) {
+      // Pause the sound.
+      sound.pause();
+      // Show the play button.
+      playBtn.classList.add('active');
+      pauseBtn.classList.remove('active');
+    }
   },
 
   /**
